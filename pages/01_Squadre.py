@@ -96,7 +96,7 @@ with att_sk:
             ])
             dm_gr.add_trace(go.Scatter(
                 x=[x/10 for x in df_sh1['Standard_Dist.']], y=df_sh1['Squadra'], mode='markers+text',
-                marker=dict(size=12, symbol='circle-x', color='orange'),  text=[x/10 for x in df_sh1['Standard_Dist.']], textposition='middle-right',
+                marker=dict(size=12, symbol='circle-x', color='orange'),  text=[x/10 for x in df_sh1['Standard_Dist.']], textposition='middle right',
                 showlegend=False ))
             dm_gr.update_layout( xaxis=dict(side='top'), plot_bgcolor='green', paper_bgcolor='green', height=500)
             st.plotly_chart(go.FigureWidget(data=dm_gr), use_container_width=True)
