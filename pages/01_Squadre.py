@@ -2,7 +2,7 @@ from Funzioni import *
 
 st.header('Analisi Squadre')
 
-att_sk, cen_sk, def_sk = st.tabs(3)
+att_sk, cen_sk, def_sk = st.tabs(['Attacking skills','Passing skills','Defending skills'])
 
 with att_sk:
     string_quest='standard'
