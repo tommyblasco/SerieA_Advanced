@@ -28,6 +28,6 @@ with att_sk:
 ))
     xg_gl.update_xaxes(dict(range=[min(x_min,y_min), max(x_max,y_max)],title='Gol Fatti'))
     xg_gl.update_yaxes(dict(range=[min(x_min,y_min), max(x_max,y_max)],title='xG'))
-    xg_gl.update_layout(annotations=[dict(text="Underperform", x=0.05, y=0.95, xref='paper', yref='paper',font_size=13, showarrow=False, xanchor='left'),
+    xg_gl.update_layout(showlegend=False, annotations=[dict(text="Underperform", x=0.05, y=0.95, xref='paper', yref='paper',font_size=13, showarrow=False, xanchor='left'),
                                      dict(text="Overperform",x=0.95, y=0.05, xref='paper', yref='paper', font_size=13,showarrow=False,xanchor='right')])
     st.plotly_chart(go.FigureWidget(data=xg_gl), use_container_width=True)
