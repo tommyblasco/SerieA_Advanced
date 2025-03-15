@@ -89,19 +89,19 @@ with att_sk:
     with st.expander('Distanza media e xg medio tiri'):
         dm, xgm = st.columns([2,1])
         with dm:
-            st.write('Distanza media tiri')
+            df_sh1 = df_sh.sort_values('Standard_Dist.')
             dm_gr = go.Figure(data=[go.Bar(
-                    x=[x/10 for x in df_sh['Standard_Dist.']], y=df_sh['Squadra'], orientation='h',
+                    x=[x/10 for x in df_sh1['Standard_Dist.']], y=df_sh1['Squadra'], orientation='h',
                     width=0.1,  marker=dict(color='orange', line=dict(color='orange', width=1)))
             ])
             dm_gr.add_trace(go.Scatter(
-                x=[x/10 for x in df_sh['Standard_Dist.']], y=df_sh['Squadra'], mode='markers',
+                x=[x/10 for x in df_sh1['Standard_Dist.']], y=df_sh1['Squadra'], mode='markers',
                 marker=dict(size=12, symbol='circle-x', color='orange'),  # Icone personalizzate
                 showlegend=False ))
             dm_gr.update_layout( xaxis=dict(side='top'), plot_bgcolor='green', paper_bgcolor='green', height=500)
             st.plotly_chart(go.FigureWidget(data=dm_gr), use_container_width=True)
         with xgm:
             df_sh['npxG/Sh']=[x/100 for x in df_sh['Prestazione prevista_npxG/Sh']]
-            df_sh1=df_sh[['Squadra','npxG/Sh']]
-            df_sh1=df_sh1.sort_values('npxG/Sh',ascending=False)
-            st.dataframe(df_sh1,hide_index=True)
+            df_sh2=df_sh[['Squadra','npxG/Sh']]
+            df_sh2=df_sh2.sort_values('npxG/Sh',ascending=False)
+            st.dataframe(df_sh2,hide_index=True)
