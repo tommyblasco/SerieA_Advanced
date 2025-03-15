@@ -82,6 +82,9 @@ with att_sk:
                                        "% conversione: %{customdata[3]:.2f}<extra></extra>"))
         sh_gr.update_xaxes(dict(range=[min(df_sh[x_sel1])-1, max(df_sh[x_sel1])+1], title='Tiri'))
         sh_gr.update_yaxes(dict(range=[min(df_sh['Standard_Reti'])-1, max(df_sh['Standard_Reti'])+1], title='Gol'))
+        xg_gl.update_layout(showlegend=False, annotations=[
+            dict(text="> efficienza", x=0.05, y=0.95, xref='paper', yref='paper', font_size=11, showarrow=False,xanchor='left'),
+            dict(text="< efficienza", x=0.95, y=0.05, xref='paper', yref='paper', font_size=11, showarrow=False,xanchor='right')])
         st.plotly_chart(go.FigureWidget(data=sh_gr), use_container_width=True)
 
 
