@@ -99,7 +99,7 @@ with att_sk:
                 marker=dict(size=12, symbol='circle-x', color='orange'),  # Icone personalizzate
                 text=df_sh['Standard_Dist.'], textposition='middle right', showlegend=False
             ))
-            dm_gr.update_layout( xaxis=dict(side='top'), plot_bgcolor='green', paper_bgcolor='green'
+            dm_gr.update_layout( xaxis=dict(side='top'), plot_bgcolor='green', paper_bgcolor='green')
         with xgm:
             df_sh1=df_sh[['Squadra','Prestazione prevista_npxG/Sh']]
             df_sh1=df_sh1.sort_values('Prestazione prevista_npxG/Sh',ascending=False)
