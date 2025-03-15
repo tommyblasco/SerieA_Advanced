@@ -13,13 +13,9 @@ with att_sk:
     st.subheader('Gol vs XG')
     opt_ex_pen=st.toggle('Escludi rigori')
     if opt_ex_pen:
-        x_sel='Rendimento_R - Rig'
-        y_sel='Prestazione prevista_npxG'
-        diff_sel='npG-npxG'
+        x_sel, y_sel, diff_sel='Rendimento_R - Rig', 'Prestazione prevista_npxG', 'npG-npxG'
     else:
-        x_sel = 'Rendimento_Reti'
-        y_sel = 'Prestazione prevista_xG'
-        diff_sel = 'G-xG'
+        x_sel, y_sel, diff_sel = 'Rendimento_Reti', 'Prestazione prevista_xG', 'G-xG'
     xg_gl = go.Figure()
     for x, y, png in zip(df_std[x_sel], df_std[y_sel], df_std['link_img']):
         xg_gl.add_layout_image( x=x, y=y, source=png,
@@ -38,7 +34,7 @@ with att_sk:
         "xG: %{customdata[2]:.2f}<br>" +
         "Gol-xG: %{customdata[3]:.2f}<extra></extra>"))
     xg_gl.update_xaxes(dict(range=[min(x_min,y_min), max(x_max,y_max)],title='Gol Fatti'))
-    xg_gl.update_yaxes(dict(range=[min(x_min,y_min), max(x_max,y_max)],title='xG'))
+    xg_gl.update_yaxes(dict(range=[min(x_min,y_min), max(x_max,y_max)],title=diff_sel.split('-')[1]))
     xg_gl.update_layout(showlegend=False, annotations=[dict(text="Underperform", x=0.05, y=0.95, xref='paper', yref='paper',font_size=13, showarrow=False, xanchor='left'),
                                      dict(text="Overperform",x=0.95, y=0.05, xref='paper', yref='paper', font_size=13,showarrow=False,xanchor='right')])
     st.plotly_chart(go.FigureWidget(data=xg_gl), use_container_width=True)
@@ -63,11 +59,9 @@ with att_sk:
     with sh_gol:
         opt_tt = st.toggle('Rapporta ai tiri totali')
         if opt_tt:
-            x_sel1='Standard_Tiri'
-            perc_sel='Standard_G/Tiri'
+            x_sel1, perc_sel, title_gr='Standard_Tiri', 'Standard_G/Tiri', 'Tiri totali'
         else:
-            x_sel1 = 'Standard_Tiri.1'
-            perc_sel = 'Standard_G/TiP'
+            x_sel1,  perc_sel, title_gr= 'Standard_Tiri.1', 'Standard_G/TiP', 'Tiri in porta'
         sh_gr = go.Figure()
         for x, y, png in zip(df_sh[x_sel1], df_sh['Standard_Reti'], df_sh['link_img']):
             sh_gr.add_layout_image(x=x, y=y, source=png,
@@ -80,9 +74,9 @@ with att_sk:
                                        "Tiri: %{customdata[1]}<br>" +
                                        "Gol: %{customdata[2]}<br>" +
                                        "% conversione: %{customdata[3]:.2f}<extra></extra>"))
-        sh_gr.update_xaxes(dict(range=[min(df_sh[x_sel1])-1, max(df_sh[x_sel1])+1], title='Tiri'))
+        sh_gr.update_xaxes(dict(range=[min(df_sh[x_sel1])-1, max(df_sh[x_sel1])+1], title=title_gr))
         sh_gr.update_yaxes(dict(range=[min(df_sh['Standard_Reti'])-1, max(df_sh['Standard_Reti'])+1], title='Gol'))
-        xg_gl.update_layout(showlegend=False, annotations=[
+        sh_gr.update_layout(showlegend=False, annotations=[
             dict(text="> efficienza", x=0.05, y=0.95, xref='paper', yref='paper', font_size=11, showarrow=False,xanchor='left'),
             dict(text="< efficienza", x=0.95, y=0.05, xref='paper', yref='paper', font_size=11, showarrow=False,xanchor='right')])
         st.plotly_chart(go.FigureWidget(data=sh_gr), use_container_width=True)
