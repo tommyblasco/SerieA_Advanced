@@ -19,7 +19,7 @@ with att_sk:
     xg_gl.add_trace(go.Scatter(x=[x_min, x_max],y=[x_min, x_max],
         mode='lines', line=dict(color='red', dash='dash')))
     xg_gl.add_trace(go.Scatter(x=df_std['Rendimento_Reti'], y=df_std['Prestazione prevista_xG'],
-    mode='markers', marker_opacity=0, customdata=df_std[['Squadre','Rendimento_Reti', 'Prestazione prevista_xG', 'G-xG']],
+    mode='markers', marker_opacity=0, customdata=df_std[['Squadra','Rendimento_Reti', 'Prestazione prevista_xG', 'G-xG']],
     hovertemplate=
         "%{customdata[0]}<br>" +
         "Gol Fatti: %{customdata[1]}<br>" +
