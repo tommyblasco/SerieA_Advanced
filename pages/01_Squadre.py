@@ -73,7 +73,7 @@ with att_sk:
                                        "%{customdata[0]}<br>" +
                                        "Tiri: %{customdata[1]}<br>" +
                                        "Gol: %{customdata[2]}<br>" +
-                                       "% conversione: %{customdata[3]:.2f}<extra></extra>"))
+                                       "Conv Gol/Tiri: %{customdata[3]}<extra></extra>"))
         sh_gr.update_xaxes(dict(range=[min(df_sh[x_sel1])-1, max(df_sh[x_sel1])+1], title=title_gr))
         sh_gr.update_yaxes(dict(range=[min(df_sh['Standard_Reti'])-1, max(df_sh['Standard_Reti'])+1], title='Gol'))
         sh_gr.update_layout(showlegend=False, annotations=[
