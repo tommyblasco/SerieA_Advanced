@@ -17,8 +17,8 @@ with att_sk:
     y_min, y_max = df_std['Prestazione prevista_xG'].min() - 1, df_std['Prestazione prevista_xG'].max() + 1
     xg_gl.add_trace(go.Scatter(x=[x_min, x_max],y=[x_min, x_max],
         mode='lines', line=dict(color='red', dash='dash')))
-    xg_gl.update_xaxes(dict(range=[min(x_min,y_min), max(x_max,y_max)],title='Gol'))
+    xg_gl.update_xaxes(dict(range=[min(x_min,y_min), max(x_max,y_max)],title='Gol Fatti'))
     xg_gl.update_yaxes(dict(range=[min(x_min,y_min), max(x_max,y_max)],title='xG'))
-    xg_gl.update_layout(annotations=[dict(text="Underperform", x=0.1, y=0.9, font_size=15, showarrow=False, xanchor='center'),
-                                     dict(text="Overperform",x=0.9, y=0.1, font_size=15,showarrow=False,xanchor='center')])
+    xg_gl.update_layout(annotations=[dict(text="Underperform", x=x_min+2, y=y_max-2, font_size=15, showarrow=False, xanchor='center'),
+                                     dict(text="Overperform",x=x_max-2, y=y_min+2, font_size=15,showarrow=False,xanchor='center')])
     st.plotly_chart(go.FigureWidget(data=xg_gl), use_container_width=True)
