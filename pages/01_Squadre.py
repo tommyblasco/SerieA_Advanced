@@ -84,4 +84,24 @@ with att_sk:
             dict(text="< efficienza", x=0.95, y=0.05, xref='paper', yref='paper', font_size=13, showarrow=False,xanchor='right')])
         st.plotly_chart(go.FigureWidget(data=sh_gr), use_container_width=True)
 
+    st.divider()
 
+    with st.expander('Distanza media e xg medio tiri'):
+        dm, xgm = st.columns([2,1])
+        with dm:
+            st.write('Distanza media tiri')
+            dm_gr=go.Figure()
+            dm_gr.add_trace(go.Scatter( x=df_sh['Standard_Dist.'], y=df_sh['Squadra'],
+                mode='lines', line=dict(width=1, color='orange'),  # Righe sottili
+                showlegend=False))
+            dm_gr.add_trace(go.Scatter(x=df_sh['Standard_Dist.'], y=df_sh['Squadra'],
+                mode='markers+text',
+                marker=dict(size=12, symbol='circle-x', color='orange'),  # Icone personalizzate
+                text=df_sh['Standard_Dist.'], textposition='middle right', showlegend=False
+            ))
+            dm_gr.update_layout( xaxis=dict(side='top'), plot_bgcolor='green', paper_bgcolor='green'
+        with xgm:
+            df_sh1=df_sh[['Squadra','Prestazione prevista_npxG/Sh']]
+            df_sh1=df_sh1.sort_values('Prestazione prevista_npxG/Sh',ascending=False)
+            df_sh1.columns=['Squadre','npxG/Sh']
+            st.dataframe(df_sh1,hide_index=True)
