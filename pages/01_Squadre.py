@@ -10,11 +10,9 @@ with att_sk:
     df_std=get_stats_fbref(table=f'stats_squads_{string_quest}_{fa}')
     st.write('Gol vs XG')
     xg_gl = go.Figure()
-    for _, row in df_std.iterrows():
-        xg_gl.add_layout_image(
-            dict( source=row['link_img'],
-                x=row['Rendimento_Reti'], y=row['Prestazione prevista_xG'],
-                xref="x", yref="y", sizex=0.4,  sizey=0.4,
-                xanchor="center", yanchor="middle", layer="above"
-            ) )
+    for x, y, png in zip(df_std['Rendimento_Reti'], df_std['Prestazione prevista_xG'], df_std['link_img']):
+        xg_gl.add_layout_image( x=x, y=y, source=png,
+            xref="x", yref="y", sizex=2, sizey=2, xanchor="center", yanchor="middle")
+    xg_gl.update_xaxes(range=[min(min(df_std['Rendimento_Reti']),min(df_std['Prestazione prevista_xG']))-1, max(max(df_std['Rendimento_Reti']),max(df_std['Prestazione prevista_xG']))+1])
+    xg_gl.update_yaxes(range=[min(min(df_std['Rendimento_Reti']),min(df_std['Prestazione prevista_xG']))-1, max(max(df_std['Rendimento_Reti']),max(df_std['Prestazione prevista_xG']))+1])
     st.plotly_chart(xg_gl)
