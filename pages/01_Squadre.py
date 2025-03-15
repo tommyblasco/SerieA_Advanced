@@ -89,7 +89,7 @@ with att_sk:
     with st.expander('Distanza media e xg medio tiri'):
         dm, xgm = st.columns([2,1])
         with dm:
-            df_sh1 = df_sh.sort_values('Standard_Dist.')
+            df_sh1 = df_sh.sort_values('Standard_Dist.',ascending=False)
             dm_gr = go.Figure(data=[go.Bar(
                     x=[x/10 for x in df_sh1['Standard_Dist.']], y=df_sh1['Squadra'], orientation='h',
                     width=0.1,  marker=dict(color='orange', line=dict(color='orange', width=1)), showlegend=False )
