@@ -76,7 +76,7 @@ with att_sk:
                                        "%{customdata[0]}<br>" +
                                        "Tiri: %{customdata[1]}<br>" +
                                        "Gol: %{customdata[2]}<br>" +
-                                       "Conv Gol/Tiri: %{customdata[3]}<extra></extra>"))
+                                       "%Conv Gol/Tiri: %{customdata[3]}<extra></extra>"))
         sh_gr.update_xaxes(dict(range=[min(df_sh[x_sel1])-1, max(df_sh[x_sel1])+1], title=title_gr))
         sh_gr.update_yaxes(dict(range=[min(df_sh['Standard_Reti'])-1, max(df_sh['Standard_Reti'])+1], title='Gol'))
         sh_gr.update_layout(showlegend=False, annotations=[
@@ -100,8 +100,9 @@ with att_sk:
                 text=df_sh['Standard_Dist.'], textposition='middle right', showlegend=False
             ))
             dm_gr.update_layout( xaxis=dict(side='top'), plot_bgcolor='green', paper_bgcolor='green')
+            st.plotly_chart(go.FigureWidget(data=dm_gr), use_container_width=True)
         with xgm:
-            df_sh1=df_sh[['Squadra','Prestazione prevista_npxG/Sh']]
-            df_sh1=df_sh1.sort_values('Prestazione prevista_npxG/Sh',ascending=False)
-            df_sh1.columns=['Squadre','npxG/Sh']
+            df_sh['npxG/Sh']=[x/100 for x in df_sh['Prestazione prevista_npxG/Sh']]
+            df_sh1=df_sh[['Squadra','npxG/Sh']]
+            df_sh1=df_sh1.sort_values('npxG/Sh',ascending=False)
             st.dataframe(df_sh1,hide_index=True)
