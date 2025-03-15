@@ -42,3 +42,46 @@ with att_sk:
     xg_gl.update_layout(showlegend=False, annotations=[dict(text="Underperform", x=0.05, y=0.95, xref='paper', yref='paper',font_size=13, showarrow=False, xanchor='left'),
                                      dict(text="Overperform",x=0.95, y=0.05, xref='paper', yref='paper', font_size=13,showarrow=False,xanchor='right')])
     st.plotly_chart(go.FigureWidget(data=xg_gl), use_container_width=True)
+
+    st.divider()
+
+    string_quest = 'shooting'
+    fa = 'for'
+    df_sh = get_stats_fbref(table=f'stats_squads_{string_quest}_{fa}')
+    st.subheader('Tiri vs Tiri in porta vs Gol')
+    fun, sh_gol=st.columns([1,2])
+    with fun:
+        team_fun=st.selectbox('Seleziona una squadra',list(df_sh['Squadra']))
+        fun_gr=go.Figure(go.Funnel(
+            y=['Tiri','Tiri in porta','Gol'], x=[df_sh.loc[df_sh['Squadra']==team_fun,'Standard_Tiri'],
+                                                 df_sh.loc[df_sh['Squadra']==team_fun,'Standard_Tiri.1'],
+                                                 df_sh.loc[df_sh['Squadra']==team_fun,'Standard_Reti']],
+            textposition='inside',textinfo='value+percent initial', marker={'color':['red','orange','yellow']}
+        ))
+        st.plotly_chart(go.FigureWidget(data=fun_gr), use_container_width=True)
+
+    with sh_gol:
+        opt_tt = st.toggle('Rapporta ai tiri totali')
+        if opt_tt:
+            x_sel1='Standard_Tiri'
+            perc_sel='Standard_G/Tiri'
+        else:
+            x_sel1 = 'Standard_Tiri.1'
+            perc_sel = 'Standard_G/TiP'
+        sh_gr = go.Figure()
+        for x, y, png in zip(df_sh[x_sel1], df_sh['Standard_Reti'], df_sh['link_img']):
+            sh_gr.add_layout_image(x=x, y=y, source=png,
+                                   xref="x", yref="y", sizex=3, sizey=3, xanchor="center", yanchor="middle")
+        sh_gr.add_trace(go.Scatter(x=df_sh[x_sel1], y=df_sh['Standard_Reti'],
+                                       mode='markers', marker_opacity=0,
+                                       customdata=df_sh[['Squadra', x_sel1, 'Standard_Reti', perc_sel]],
+                                       hovertemplate=
+                                       "%{customdata[0]}<br>" +
+                                       "Tiri: %{customdata[1]}<br>" +
+                                       "Gol: %{customdata[2]}<br>" +
+                                       "% conversione: %{customdata[3]:.2f}<extra></extra>"))
+        sh_gr.update_xaxes(dict(range=[min(df_sh[x_sel1]), max(df_sh[x_sel1])], title='Tiri'))
+        sh_gr.update_yaxes(dict(range=[min(df_sh['Standard_Reti']), max(df_sh['Standard_Reti'])], title='Gol'))
+        st.plotly_chart(go.FigureWidget(data=sh_gr), use_container_width=True)
+
+
