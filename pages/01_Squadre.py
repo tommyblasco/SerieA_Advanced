@@ -53,9 +53,9 @@ with att_sk:
     with fun:
         team_fun=st.selectbox('Seleziona una squadra',list(df_sh['Squadra']))
         fun_gr=go.Figure(go.Funnel(
-            y=['Tiri','Tiri in porta','Gol'], x=[df_sh.loc[df_sh['Squadra']==team_fun,'Standard_Tiri'],
-                                                 df_sh.loc[df_sh['Squadra']==team_fun,'Standard_Tiri.1'],
-                                                 df_sh.loc[df_sh['Squadra']==team_fun,'Standard_Reti']],
+            y=['Tiri','Tiri in porta','Gol'], x=[df_sh.loc[df_sh['Squadra']==team_fun,'Standard_Tiri'].item(),
+                                                 df_sh.loc[df_sh['Squadra']==team_fun,'Standard_Tiri.1'].item(),
+                                                 df_sh.loc[df_sh['Squadra']==team_fun,'Standard_Reti'].item()],
             textposition='inside',textinfo='value+percent initial', marker={'color':['red','orange','yellow']}
         ))
         st.plotly_chart(go.FigureWidget(data=fun_gr), use_container_width=True)
@@ -80,8 +80,8 @@ with att_sk:
                                        "Tiri: %{customdata[1]}<br>" +
                                        "Gol: %{customdata[2]}<br>" +
                                        "% conversione: %{customdata[3]:.2f}<extra></extra>"))
-        sh_gr.update_xaxes(dict(range=[min(df_sh[x_sel1]), max(df_sh[x_sel1])], title='Tiri'))
-        sh_gr.update_yaxes(dict(range=[min(df_sh['Standard_Reti']), max(df_sh['Standard_Reti'])], title='Gol'))
+        sh_gr.update_xaxes(dict(range=[min(df_sh[x_sel1])-1, max(df_sh[x_sel1])+1], title='Tiri'))
+        sh_gr.update_yaxes(dict(range=[min(df_sh['Standard_Reti'])-1, max(df_sh['Standard_Reti'])+1], title='Gol'))
         st.plotly_chart(go.FigureWidget(data=sh_gr), use_container_width=True)
 
 
