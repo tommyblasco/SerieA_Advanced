@@ -90,15 +90,10 @@ with att_sk:
         dm, xgm = st.columns([2,1])
         with dm:
             st.write('Distanza media tiri')
-            dm_gr=go.Figure()
-            dm_gr.add_trace(go.Scatter( x=df_sh['Standard_Dist.'], y=df_sh['Squadra'],
-                mode='lines', line=dict(width=1, color='orange'),  # Righe sottili
-                showlegend=False))
-            dm_gr.add_trace(go.Scatter(x=df_sh['Standard_Dist.'], y=df_sh['Squadra'],
-                mode='markers+text',
-                marker=dict(size=12, symbol='circle-x', color='orange'),  # Icone personalizzate
-                text=df_sh['Standard_Dist.'], textposition='middle right', showlegend=False
-            ))
+            dm_gr = go.Figure(data=[go.Bar(
+                    x=df_sh['Standard_Dist.'], y=df_sh['Squadra'],
+                    width=0.1,  marker=dict(size=12, symbol='circle-x', color='orange', line=dict(color='orange', width=1)))
+            ])
             dm_gr.update_layout( xaxis=dict(side='top'), plot_bgcolor='green', paper_bgcolor='green')
             st.plotly_chart(go.FigureWidget(data=dm_gr), use_container_width=True)
         with xgm:
