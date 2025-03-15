@@ -10,16 +10,18 @@ with att_sk:
     df_std=get_stats_fbref(table=f'stats_squads_{string_quest}_{fa}')
     df_std['G-xG']=[x-y for x,y in zip(df_std['Rendimento_Reti'],df_std['Prestazione prevista_xG'])]
     df_std['npG-npxG'] = [x - y for x, y in zip(df_std['Rendimento_R - Rig'], df_std['Prestazione prevista_npxG'])]
+    rapp_x = (df_std['Rendimento_Reti'].max()-df_std['Rendimento_Reti'].min())/(df_std['Rendimento_R - Rig'].max()-df_std['Rendimento_R - Rig'].min())
+    rapp_y = (df_std['Prestazione prevista_xG'].max()-df_std['Prestazione prevista_xG'].min())/(df_std['Prestazione prevista_npxG'].max()-df_std['Prestazione prevista_npxG'].min())
     st.subheader('Gol vs XG')
     opt_ex_pen=st.toggle('Escludi rigori')
     if opt_ex_pen:
-        x_sel, y_sel, diff_sel='Rendimento_R - Rig', 'Prestazione prevista_npxG', 'npG-npxG'
+        x_sel, y_sel, diff_sel, coeff_x, coeff_y='Rendimento_R - Rig', 'Prestazione prevista_npxG', 'npG-npxG', 1, 1
     else:
-        x_sel, y_sel, diff_sel = 'Rendimento_Reti', 'Prestazione prevista_xG', 'G-xG'
+        x_sel, y_sel, diff_sel, coeff_x, coeff_y = 'Rendimento_Reti', 'Prestazione prevista_xG', 'G-xG', rapp_x, rapp_y
     xg_gl = go.Figure()
     for x, y, png in zip(df_std[x_sel], df_std[y_sel], df_std['link_img']):
         xg_gl.add_layout_image( x=x, y=y, source=png,
-            xref="x", yref="y", sizex=0.1, sizey=0.1, xanchor="center", yanchor="middle")
+            xref="x", yref="y", sizex=4*coeff_x, sizey=4*coeff_y, xanchor="center", yanchor="middle")
     x_min, x_max = df_std[x_sel].min() - 1, df_std[x_sel].max() + 1
     y_min, y_max = df_std[y_sel].min() - 1, df_std[y_sel].max() + 1
     #bisettrice
@@ -57,15 +59,16 @@ with att_sk:
         st.plotly_chart(go.FigureWidget(data=fun_gr), use_container_width=True)
 
     with sh_gol:
+        rapp_x1 = (df_sh['Standard_Tiri'].max() - df_sh['Standard_Tiri'].min()) / ( df_sh['Standard_Tiri.1'].max() - df_sh['Standard_Tiri.1'].min())
         opt_tt = st.toggle('Rapporta ai tiri totali')
         if opt_tt:
-            x_sel1, perc_sel, title_gr='Standard_Tiri', 'Standard_G/Tiri', 'Tiri totali'
+            x_sel1, perc_sel, title_gr, coeff_x1='Standard_Tiri', 'Standard_G/Tiri', 'Tiri totali', rapp_x1
         else:
-            x_sel1,  perc_sel, title_gr= 'Standard_Tiri.1', 'Standard_G/TiP', 'Tiri in porta'
+            x_sel1,  perc_sel, title_gr, coeff_x1= 'Standard_Tiri.1', 'Standard_G/TiP', 'Tiri in porta', 1
         sh_gr = go.Figure()
         for x, y, png in zip(df_sh[x_sel1], df_sh['Standard_Reti'], df_sh['link_img']):
             sh_gr.add_layout_image(x=x, y=y, source=png,
-                                   xref="x", yref="y", sizex=0.1, sizey=0.1, xanchor="center", yanchor="middle")
+                                   xref="x", yref="y", sizex=4*rapp_x1, sizey=4*rapp_x1, xanchor="center", yanchor="middle")
         sh_gr.add_trace(go.Scatter(x=df_sh[x_sel1], y=df_sh['Standard_Reti'],
                                        mode='markers', marker_opacity=0,
                                        customdata=df_sh[['Squadra', x_sel1, 'Standard_Reti', perc_sel]],
