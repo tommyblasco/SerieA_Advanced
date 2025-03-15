@@ -92,11 +92,11 @@ with att_sk:
             df_sh1 = df_sh.sort_values('Standard_Dist.')
             dm_gr = go.Figure(data=[go.Bar(
                     x=[x/10 for x in df_sh1['Standard_Dist.']], y=df_sh1['Squadra'], orientation='h',
-                    width=0.1,  marker=dict(color='orange', line=dict(color='orange', width=1)))
+                    width=0.1,  marker=dict(color='orange', line=dict(color='orange', width=1)), showlegend=False )
             ])
             dm_gr.add_trace(go.Scatter(
-                x=[x/10 for x in df_sh1['Standard_Dist.']], y=df_sh1['Squadra'], mode='markers',
-                marker=dict(size=12, symbol='circle-x', color='orange'),  # Icone personalizzate
+                x=[x/10 for x in df_sh1['Standard_Dist.']], y=df_sh1['Squadra'], mode='markers+text',
+                marker=dict(size=12, symbol='circle-x', color='orange'),  textposition='middle-right',
                 showlegend=False ))
             dm_gr.update_layout( xaxis=dict(side='top'), plot_bgcolor='green', paper_bgcolor='green', height=500)
             st.plotly_chart(go.FigureWidget(data=dm_gr), use_container_width=True)
