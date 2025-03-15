@@ -15,4 +15,4 @@ with att_sk:
             xref="x", yref="y", sizex=2, sizey=2, xanchor="center", yanchor="middle")
     xg_gl.update_xaxes(range=[min(min(df_std['Rendimento_Reti']),min(df_std['Prestazione prevista_xG']))-1, max(max(df_std['Rendimento_Reti']),max(df_std['Prestazione prevista_xG']))+1])
     xg_gl.update_yaxes(range=[min(min(df_std['Rendimento_Reti']),min(df_std['Prestazione prevista_xG']))-1, max(max(df_std['Rendimento_Reti']),max(df_std['Prestazione prevista_xG']))+1])
-    st.plotly_chart(xg_gl)
+    st.plotly_chart(go.FigureWidget(data=xg_gl), use_container_width=True)
