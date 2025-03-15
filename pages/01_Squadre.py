@@ -98,7 +98,7 @@ with att_sk:
                 x=[x/10 for x in df_sh1['Standard_Dist.']], y=df_sh1['Squadra'], mode='markers+text',
                 marker=dict(size=12, symbol='circle-x', color='orange'),  text=[x/10 for x in df_sh1['Standard_Dist.']], textposition='middle right',
                 showlegend=False ))
-            dm_gr.update_layout( xaxis=dict(side='top'))
+            dm_gr.update_layout( xaxis=dict(side='top'), height=450)
             st.plotly_chart(go.FigureWidget(data=dm_gr), use_container_width=True)
         with xgm:
             df_sh['npxG/Sh']=[x/100 for x in df_sh['Prestazione prevista_npxG/Sh']]
