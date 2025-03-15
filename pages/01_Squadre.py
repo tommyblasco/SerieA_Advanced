@@ -68,7 +68,7 @@ with att_sk:
         sh_gr = go.Figure()
         for x, y, png in zip(df_sh[x_sel1], df_sh['Standard_Reti'], df_sh['link_img']):
             sh_gr.add_layout_image(x=x, y=y, source=png,
-                                   xref="x", yref="y", sizex=3*coeff_x1, sizey=3, xanchor="center", yanchor="middle")
+                                   xref="x", yref="y", sizex=4*coeff_x1, sizey=4, xanchor="center", yanchor="middle")
         sh_gr.add_trace(go.Scatter(x=df_sh[x_sel1], y=df_sh['Standard_Reti'],
                                        mode='markers', marker_opacity=0,
                                        customdata=df_sh[['Squadra', x_sel1, 'Standard_Reti', perc_sel]],
