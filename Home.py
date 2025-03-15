@@ -1,6 +1,5 @@
 import streamlit as st
 st.set_page_config(page_title="Serie A",layout='wide')
-import understatapi
 import requests
 from PIL import Image
 from io import BytesIO

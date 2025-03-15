@@ -7,4 +7,3 @@ ipywidgets
 PyGithub
 Pillow
 anywidget
-understatapi

@@ -9,8 +9,8 @@ import plotly.graph_objects as go
 sito_fbref='https://fbref.com/it/comps/11/Serie-A-Stats'
 stagione_corso='2024-2025'
 
-client=understatapi.UnderstatClient()
-league_data=client.league(league='Serie_A').get_team_data(season=stagione_corso[:4])
+#client=understatapi.UnderstatClient()
+#league_data=client.league(league='Serie_A').get_team_data(season=stagione_corso[:4])
 
 def update_colnames(col_list):
     n=len(col_list)
