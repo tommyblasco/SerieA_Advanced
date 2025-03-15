@@ -12,7 +12,11 @@ with att_sk:
     xg_gl = go.Figure()
     for x, y, png in zip(df_std['Rendimento_Reti'], df_std['Prestazione prevista_xG'], df_std['link_img']):
         xg_gl.add_layout_image( x=x, y=y, source=png,
-            xref="x", yref="y", sizex=2, sizey=2, xanchor="center", yanchor="middle")
-    xg_gl.update_xaxes(range=[min(min(df_std['Rendimento_Reti']),min(df_std['Prestazione prevista_xG']))-1, max(max(df_std['Rendimento_Reti']),max(df_std['Prestazione prevista_xG']))+1])
-    xg_gl.update_yaxes(range=[min(min(df_std['Rendimento_Reti']),min(df_std['Prestazione prevista_xG']))-1, max(max(df_std['Rendimento_Reti']),max(df_std['Prestazione prevista_xG']))+1])
+            xref="x", yref="y", sizex=4, sizey=4, xanchor="center", yanchor="middle")
+    x_min, x_max = df_std['Rendimento_Reti'].min() - 1, df_std['Rendimento_Reti'].max() + 1
+    y_min, y_max = df_std['Prestazione prevista_xG'].min() - 1, df_std['Prestazione prevista_xG'].max() + 1
+    xg_gl.add_trace(go.Scatter(x=[x_min, x_max],y=[x_min, x_max],
+        mode='lines', line=dict(color='red', dash='dash')))
+    xg_gl.update_xaxes(range=[min(x_min,y_min), max(x_max,y_max)])
+    xg_gl.update_yaxes(range=[min(x_min,y_min), max(x_max,y_max)])
     st.plotly_chart(go.FigureWidget(data=xg_gl), use_container_width=True)
