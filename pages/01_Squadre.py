@@ -91,10 +91,14 @@ with att_sk:
         with dm:
             st.write('Distanza media tiri')
             dm_gr = go.Figure(data=[go.Bar(
-                    x=df_sh['Standard_Dist.'], y=df_sh['Squadra'],
-                    width=0.1,  marker=dict(symbol='circle-x', color='orange', line=dict(color='orange', width=1)))
+                    x=df_sh['Standard_Dist.'], y=df_sh['Squadra'], orientation='h',
+                    width=0.1,  marker=dict(color='orange', line=dict(color='orange', width=1)))
             ])
-            dm_gr.update_layout( xaxis=dict(side='top'), plot_bgcolor='green', paper_bgcolor='green')
+            dm_gr.add_trace(go.Scatter(
+                x=df_sh['Standard_Dist.'], y=df_sh['Squadra'], mode='markers',
+                marker=dict(size=12, symbol='circle-x', color='orange'),  # Icone personalizzate
+                showlegend=False ))
+            dm_gr.update_layout( xaxis=dict(side='top'), plot_bgcolor='green', paper_bgcolor='green', height=500)
             st.plotly_chart(go.FigureWidget(data=dm_gr), use_container_width=True)
         with xgm:
             df_sh['npxG/Sh']=[x/100 for x in df_sh['Prestazione prevista_npxG/Sh']]
