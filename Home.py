@@ -30,9 +30,9 @@ st.session_state['camp']=st.sidebar.selectbox('Scegli un campionato:',dict_camp.
 st.session_state['stag']=st.sidebar.selectbox('Scegli una stagione:',[stagione_corso]+list_stag2pass)
 
 pagine = {
-    "Squadre": "Squadre",
-    "Giocatori": "Giocatori",
-    "Partite": "Partite"
+    "Squadre": "01_Squadre",
+    "Giocatori": "02_Giocatori",
+    "Partite": "03_Partite"
 }
 
 # Importazione dinamica della pagina
