@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from shared import *
+import shared
 
 def update_colnames(col_list):
     n=len(col_list)
@@ -13,11 +13,11 @@ def update_colnames(col_list):
     return new_col
 
 stagion = st.session_state.get('stag', 'Serie A')
-league = st.session_state.get('camp', stagione_corso)
+league = st.session_state.get('camp', shared.stagione_corso)
 def get_stats_fbref(table,stag=stagion):
-    s = f'https://fbref.com/it/comps/{dict_camp[league]}/{league.replace(' ', '-')}-Stats'
+    s = f'https://fbref.com/it/comps/{shared.dict_camp[league]}/{league.replace(' ', '-')}-Stats'
     df=pd.read_html(s,attrs={'id':table})[0]
-    if table!=f'results{stag}{dict_camp[league]}1_overall':
+    if table!=f'results{stag}{shared.dict_camp[league]}1_overall':
         df.columns=update_colnames(df.columns)
     rad_sito=f"https://raw.githubusercontent.com/tommyblasco/SerieA_Advanced/master/images/stemmi/{league.replace(' ','-')}/"
     df['link_img']=[rad_sito+x+'.png' for x in df['Squadra']]
