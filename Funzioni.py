@@ -1,4 +1,3 @@
-from Home import dict_camp
 import streamlit as st
 import pandas as pd
 import requests
@@ -6,7 +5,7 @@ from PIL import Image
 from io import BytesIO
 import plotly.graph_objects as go
 
-
+dict_camp = {'Premier League':'9','La Liga':'12','Serie A':'11','Bundesliga':'20','Ligue 1':'13'}
 sito_fbref=f'https://fbref.com/it/comps/{dict_camp[st.session_state['camp']]}/{st.session_state['camp'].replace(' ','-')}-Stats'
 
 def update_colnames(col_list):

@@ -4,6 +4,7 @@ import requests
 from PIL import Image
 from io import BytesIO
 import importlib
+from Funzioni import dict_camp
 
 st.title("Top 5 campionati ai raggi X(G)")
 
@@ -18,7 +19,7 @@ pagina = st.sidebar.radio("Vai a:", ["Squadre", "Giocatori", "Partite"])
 stagione_corso='2024-2025'
 
 list_stag2pass=[str(int(stagione_corso[:4])-1)+'-'+stagione_corso[:4], str(int(stagione_corso[:4])-2)+'-'+str(int(stagione_corso[:4])-1)]
-dict_camp = {'Premier League':'9','La Liga':'12','Serie A':'11','Bundesliga':'20','Ligue 1':'13'}
+
 
 if 'camp' not in st.session_state:
     st.session_state['camp'] = "Serie A"
