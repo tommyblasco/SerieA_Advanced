@@ -8,3 +8,4 @@ PyGithub
 Pillow
 anywidget
 lxml
+html5lib
