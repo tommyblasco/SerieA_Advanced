@@ -4,9 +4,7 @@ import requests
 from PIL import Image
 from io import BytesIO
 import plotly.graph_objects as go
-
-sito_fbref='https://fbref.com/it/comps/11/Serie-A-Stats'
-stagione_corso='2024-2025'
+from Home import sito_fbref, sel_stag, sel_camp, dict_camp
 
 def update_colnames(col_list):
     n=len(col_list)
@@ -17,10 +15,10 @@ def update_colnames(col_list):
         else:
             new_col.append(col_list[i][0]+"_"+col_list[i][1])
     return new_col
-def get_stats_fbref(table,s=sito_fbref,stag=stagione_corso):
+def get_stats_fbref(table,s=sito_fbref,stag=sel_stag):
     df=pd.read_html(s,attrs={'id':table})[0]
-    if table!=f'results{stag}111_overall':
+    if table!=f'results{stag}{dict_camp[sel_camp]}1_overall':
         df.columns=update_colnames(df.columns)
-    rad_sito="https://raw.githubusercontent.com/tommyblasco/SerieA_Advanced/master/images/stemmi/"
-    df['link_img']=[rad_sito+x.upper()+'.png' if x!='Hellas Verona' else rad_sito+'VERONA.png' for x in df['Squadra']]
+    rad_sito=f"https://raw.githubusercontent.com/tommyblasco/SerieA_Advanced/master/images/stemmi/{sel_camp.replace(' ','-')}/"
+    df['link_img']=[rad_sito+x+'.png' for x in df['Squadra']]
     return df
