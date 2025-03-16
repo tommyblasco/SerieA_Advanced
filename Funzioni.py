@@ -1,9 +1,12 @@
 import streamlit as st
 import pandas as pd
+from understatapi import UnderstatClient
 
 dict_camp = {'Premier League':'9','La Liga':'12','Serie A':'11','Bundesliga':'20','Ligue 1':'13'}
 stagione_corso='2024-2025'
 list_stag2pass=[str(int(stagione_corso[:4])-1)+'-'+stagione_corso[:4], str(int(stagione_corso[:4])-2)+'-'+str(int(stagione_corso[:4])-1)]
+
+understat = UnderstatClient()
 
 def update_colnames(col_list):
     n=len(col_list)

@@ -108,3 +108,5 @@ with att_sk:
         df_sh2=df_sh[['Squadra','npxG/Sh']]
         df_sh2=df_sh2.sort_values('npxG/Sh',ascending=False)
         st.dataframe(df_sh2,hide_index=True)
+
+    st.dataframe(understat.league(league="EPL").get_player_data(season="2019"),hide_index=True)
