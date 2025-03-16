@@ -80,8 +80,8 @@ with att_sk:
                                                "Tiri: %{customdata[1]}<br>" +
                                                "Gol: %{customdata[2]}<br>" +
                                                "%Conv Gol/Tiri: %{customdata[3]}<extra></extra>"))
-        sh_gr.update_xaxes(dict(range=[min(df_sh[x_sel1])-1, max(df_sh[x_sel1])+1], title=title_gr))
-        sh_gr.update_yaxes(dict(range=[min(df_sh['Standard_Reti'])-1, max(df_sh['Standard_Reti'])+1], title='Gol'))
+        sh_gr.update_xaxes(dict(range=[min(df_sh[x_sel1])-4, max(df_sh[x_sel1])+4], title=title_gr))
+        sh_gr.update_yaxes(dict(range=[min(df_sh['Standard_Reti'])-4, max(df_sh['Standard_Reti'])+4], title='Gol'))
         sh_gr.update_layout(showlegend=False, annotations=[
                     dict(text="> efficienza", x=0.05, y=0.95, xref='paper', yref='paper', font_size=13, showarrow=False,xanchor='left'),
                     dict(text="< efficienza", x=0.95, y=0.05, xref='paper', yref='paper', font_size=13, showarrow=False,xanchor='right')])
