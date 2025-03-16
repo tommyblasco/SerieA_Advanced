@@ -1,23 +1,9 @@
 import streamlit as st
 import pandas as pd
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
-from understatapi import UnderstatClient
 
 dict_camp = {'Premier League':'9','La Liga':'12','Serie A':'11','Bundesliga':'20','Ligue 1':'13'}
 stagione_corso='2024-2025'
 list_stag2pass=[str(int(stagione_corso[:4])-1)+'-'+stagione_corso[:4], str(int(stagione_corso[:4])-2)+'-'+str(int(stagione_corso[:4])-1)]
-
-def setup_driver():
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")  # Modalità headless
-    chrome_options.add_argument("--disable-gpu")  # Disabilita la GPU
-    chrome_options.add_argument("--no-sandbox")  # Necessario per ambienti come Docker
-
-    # Impostazione del driver Chrome
-    driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
-    return driver
 
 
 def update_colnames(col_list):

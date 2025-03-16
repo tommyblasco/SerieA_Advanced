@@ -9,6 +9,3 @@ anywidget
 lxml
 html5lib
 beautifulsoup4
-understatapi
-selenium
-webdriver_manager
