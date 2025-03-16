@@ -25,7 +25,7 @@ with att_sk:
     xg_gl = go.Figure()
     for x, y, png in zip(df_std[x_sel], df_std[y_sel], df_std['link_img']):
         xg_gl.add_layout_image( x=x, y=y, source=png,
-                    xref="x", yref="y", sizex=4*coeff_x, sizey=4*coeff_y, xanchor="center", yanchor="middle")
+                    xref="x", yref="y", sizex=5*coeff_x, sizey=5*coeff_y, xanchor="center", yanchor="middle")
     x_min, x_max = df_std[x_sel].min() - 1, df_std[x_sel].max() + 1
     y_min, y_max = df_std[y_sel].min() - 1, df_std[y_sel].max() + 1
     #bisettrice
@@ -71,7 +71,7 @@ with att_sk:
         sh_gr = go.Figure()
         for x, y, png in zip(df_sh[x_sel1], df_sh['Standard_Reti'], df_sh['link_img']):
             sh_gr.add_layout_image(x=x, y=y, source=png,
-                                           xref="x", yref="y", sizex=4*coeff_x1, sizey=4, xanchor="center", yanchor="middle")
+                                           xref="x", yref="y", sizex=5*coeff_x1, sizey=5, xanchor="center", yanchor="middle")
         sh_gr.add_trace(go.Scatter(x=df_sh[x_sel1], y=df_sh['Standard_Reti'],
                                                mode='markers', marker_opacity=0,
                                                customdata=df_sh[['Squadra', x_sel1, 'Standard_Reti', perc_sel]],
