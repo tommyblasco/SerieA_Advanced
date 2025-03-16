@@ -4,7 +4,7 @@ import requests
 from PIL import Image
 from io import BytesIO
 import importlib
-from Funzioni import dict_camp
+from shared import dict_camp
 
 st.title("Top 5 campionati ai raggi X(G)")
 
