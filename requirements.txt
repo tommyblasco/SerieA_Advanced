@@ -4,8 +4,8 @@ numpy
 streamlit
 plotly
 ipywidgets
-PyGithub
 Pillow
 anywidget
 lxml
 html5lib
+beautifulsoup4
