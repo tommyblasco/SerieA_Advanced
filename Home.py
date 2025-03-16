@@ -37,7 +37,7 @@ pagine = {
 }
 
 # Importazione dinamica della pagina
-modulo = importlib.import_module(f"pages.{pagine[pagina]}")
+modulo = importlib.import_module(f"pages/{pagine[pagina]}")
 modulo.show()
 
 
