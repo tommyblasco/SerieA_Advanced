@@ -1,6 +1,8 @@
 import plotly.graph_objects as go
 from Funzioni import *
 
+setup_driver()
+
 st.header('Analisi Squadre')
 
 s1, s2 = st.columns(2)
@@ -109,4 +111,5 @@ with att_sk:
         df_sh2=df_sh2.sort_values('npxG/Sh',ascending=False)
         st.dataframe(df_sh2,hide_index=True)
 
+    understat = UnderstatClient()
     st.dataframe(understat.league(league="EPL").get_player_data(season="2019"),hide_index=True)
