@@ -1,4 +1,4 @@
-from Funzioni import *
+from Funzioni import st, go, get_stats_fbref
 
 def show():
     st.header('Analisi Squadre')
