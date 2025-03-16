@@ -6,7 +6,7 @@ import pages.Squadre
 import pages.Partite
 import pages.Giocatori
 from io import BytesIO
-from shared import dict_camp, stagione_corso
+from shared import *
 
 st.title("Top 5 campionati ai raggi X(G)")
 

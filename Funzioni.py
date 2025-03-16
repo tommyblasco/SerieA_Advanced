@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from shared import dict_camp, stagione_corso
+from shared import *
 
 def update_colnames(col_list):
     n=len(col_list)
