@@ -1,6 +1,6 @@
 import plotly.graph_objects as go
 import streamlit as st
-from Home import get_stats_fbref
+from Funzioni import get_stats_fbref
 
 def show():
     st.header('Analisi Squadre')
