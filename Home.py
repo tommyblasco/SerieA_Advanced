@@ -1,38 +1,20 @@
 import streamlit as st
 st.set_page_config(page_title="FootballMent",layout='wide')
 import requests
-import shared
 from PIL import Image
-import pages.Squadre
-import pages.Partite
-import pages.Giocatori
 from io import BytesIO
 
 
 st.title("Top 5 campionati ai raggi X(G)")
 
 st.subheader("Statistiche avanzate sul calcio moderno europeo")
-
 home_img=Image.open(BytesIO(requests.get(f"https://github.com/tommyblasco/SerieA_Advanced/blob/master/images/varie/home.png?raw=true").content))
 st.image(home_img, use_container_width=True)
 
-list_stag2pass=[str(int(shared.stagione_corso[:4])-1)+'-'+shared.stagione_corso[:4], str(int(shared.stagione_corso[:4])-2)+'-'+str(int(shared.stagione_corso[:4])-1)]
-
-if 'camp' not in st.session_state:
-    st.session_state['camp'] = "Serie A"
-if 'stag' not in st.session_state:
-    st.session_state['stag'] = shared.stagione_corso
-
-st.sidebar.title("Sezione analisi")
-pagina = st.sidebar.radio("Vai a:", ["Squadre", "Giocatori", "Partite"])
-st.sidebar.title("Filtra per:")
-st.session_state['camp']=st.sidebar.selectbox('Scegli un campionato:',shared.dict_camp.keys())
-st.session_state['stag']=st.sidebar.selectbox('Scegli una stagione:',[shared.stagione_corso]+list_stag2pass)
-
-
-if pagina == "Squadre":
-    pages.Squadre.show()
-elif pagina == "Giocatori":
-    pages.Giocatori.show()
-elif pagina == "Partite":
-    pages.Partite.show()
+st.subheader('I campionati')
+l1, l2, l3, l4, l5 = st.columns(5)
+l1.image(Image.open(BytesIO(requests.get(f"https://github.com/tommyblasco/SerieA_Advanced/blob/master/images/varie/premier_league.png?raw=true").content)), use_container_width=True, caption='🇬🇧 Premier League')
+l2.image(Image.open(BytesIO(requests.get(f"https://github.com/tommyblasco/SerieA_Advanced/blob/master/images/varie/serie_a.png?raw=true").content)), use_container_width=True, caption='🇮🇹 Serie A')
+l3.image(Image.open(BytesIO(requests.get(f"https://github.com/tommyblasco/SerieA_Advanced/blob/master/images/varie/la_liga.png?raw=true").content)), use_container_width=True, caption='🇪🇸 LaLiga')
+l4.image(Image.open(BytesIO(requests.get(f"https://github.com/tommyblasco/SerieA_Advanced/blob/master/images/varie/bundesliga.png?raw=true").content)), use_container_width=True, caption='🇩🇪 Bundesliga')
+l5.image(Image.open(BytesIO(requests.get(f"https://github.com/tommyblasco/SerieA_Advanced/blob/master/images/varie/ligue1.png?raw=true").content)), use_container_width=True, caption='🇫🇷 Ligue 1')
