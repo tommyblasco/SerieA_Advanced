@@ -6,7 +6,7 @@ import pages.Squadre
 import pages.Partite
 import pages.Giocatori
 from io import BytesIO
-from shared import dict_camp
+from shared import dict_camp, stagione_corso
 
 st.title("Top 5 campionati ai raggi X(G)")
 
@@ -15,7 +15,6 @@ st.subheader("Statistiche avanzate sul calcio moderno europeo")
 home_img=Image.open(BytesIO(requests.get(f"https://github.com/tommyblasco/SerieA_Advanced/blob/master/images/varie/home.png?raw=true").content))
 st.image(home_img, use_container_width=True)
 
-stagione_corso='2024-2025'
 list_stag2pass=[str(int(stagione_corso[:4])-1)+'-'+stagione_corso[:4], str(int(stagione_corso[:4])-2)+'-'+str(int(stagione_corso[:4])-1)]
 
 if 'camp' not in st.session_state:
