@@ -3,6 +3,7 @@ st.set_page_config(page_title="FootballMent",layout='wide')
 import requests
 from PIL import Image
 from io import BytesIO
+import importlib
 
 st.title("Top 5 campionati ai raggi X(G)")
 
@@ -28,11 +29,14 @@ st.sidebar.title("Filtra per:")
 st.session_state['camp']=st.sidebar.selectbox('Scegli un campionato:',dict_camp.keys())
 st.session_state['stag']=st.sidebar.selectbox('Scegli una stagione:',[stagione_corso]+list_stag2pass)
 
-if pagina == "Squadre":
-    exec(open("pages/01_Squadre.py").read())
-elif pagina == "Giocatori":
-    exec(open("pages/02_Giocatori.py").read())
-elif pagina == "Partite":
-    exec(open("pages/03_Partite.py").read())
+pagine = {
+    "Squadre": "squadre",
+    "Giocatori": "giocatori",
+    "Partite": "partite"
+}
+
+# Importazione dinamica della pagina
+modulo = importlib.import_module(f"pages.{pagine[pagina]}")
+modulo.show()
 
 
