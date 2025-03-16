@@ -17,9 +17,9 @@ def update_colnames(col_list):
 
 def get_stats_fbref(table,stag,league):
     if stag!=stagione_corso:
-        s = f'https://fbref.com/it/comps/{stag}/{dict_camp[league]}/{league.replace(' ', '-')}-Stats'
+        s = f'https://fbref.com/it/comp/{stag}/{dict_camp[league]}/{league.replace(' ', '-')}-Stats'
     else:
-        s = f'https://fbref.com/it/comp/{dict_camp[league]}/{league.replace(' ', '-')}-Stats'
+        s = f'https://fbref.com/it/comps/{dict_camp[league]}/{league.replace(' ', '-')}-Stats'
     df=pd.read_html(s,attrs={'id':table})[0]
     if table!=f'results{stag}{dict_camp[league]}1_overall':
         df.columns=update_colnames(df.columns)
