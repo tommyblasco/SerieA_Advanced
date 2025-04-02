@@ -116,8 +116,7 @@ with att_sk:
     pp_gr = go.Figure()
     for x, y, png in zip(df_std['Poss.'], df_std['Rendimento_Reti'], df_std['link_img']):
         pp_gr.add_layout_image(x=x, y=y, source=png, xref="x", yref="y", sizex=5, sizey=5, xanchor="center", yanchor="middle")
-    pp_gr.add_trace(go.Scatter(x=50,y=[x_min, x_max],
-                mode='lines', line=dict(color='red', dash='dash')))
+    pp_gr.add_vline(v=50,line_dash="dash", line_color="red")
     pp_gr.add_trace(go.Scatter(x=df_std['Poss.'], y=df_std['Rendimento_Reti'],
                                mode='markers', marker_opacity=0,
                                customdata=df_std[['Squadra', 'Poss.', 'Rendimento_Reti']],
