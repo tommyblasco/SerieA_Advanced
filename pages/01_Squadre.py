@@ -8,11 +8,13 @@ s1, s2 = st.columns(2)
 camp_sel=s1.selectbox('Scegli una campionato',dict_camp.keys())
 stag_sel=s2.selectbox('Scegli una stagione',[stagione_corso]+list_stag2pass)
 
+df_std=get_stats_fbref(table='stats_squads_standard_for', stag=stag_sel, league=camp_sel)
+df_sh = get_stats_fbref(table='stats_squads_shooting_for', stag=stag_sel, league=camp_sel)
+df_pass = get_stats_fbref(table='stats_squads_passing_for', stag=stag_sel, league=camp_sel)
+
 att_sk, cen_sk, def_sk = st.tabs(['Attacking skills','Passing skills','Defending skills'])
 
 with att_sk:
-    string_quest, fa ='standard', 'for'
-    df_std=get_stats_fbref(table=f'stats_squads_{string_quest}_{fa}', stag=stag_sel, league=camp_sel)
     df_std['G-xG']=[x-y for x,y in zip(df_std['Rendimento_Reti'],df_std['Prestazione prevista_xG'])]
     df_std['npG-npxG'] = [x - y for x, y in zip(df_std['Rendimento_R - Rig'], df_std['Prestazione prevista_npxG'])]
     rapp_x = (df_std['Rendimento_Reti'].max()-df_std['Rendimento_Reti'].min())/(df_std['Rendimento_R - Rig'].max()-df_std['Rendimento_R - Rig'].min())
@@ -48,8 +50,6 @@ with att_sk:
 
     st.divider()
 
-    string_quest, fa = 'shooting', 'for'
-    df_sh = get_stats_fbref(table=f'stats_squads_{string_quest}_{fa}', stag=stag_sel, league=camp_sel)
     st.subheader('Tiri vs Tiri in porta vs Gol')
     fun, sh_gol=st.columns([1,2])
     with fun:
@@ -109,3 +109,20 @@ with att_sk:
         df_sh2=df_sh[['Squadra','npxG/Sh']]
         df_sh2=df_sh2.sort_values('npxG/Sh',ascending=False)
         st.dataframe(df_sh2,hide_index=True)
+
+    st.divider()
+
+    st.subheader('Possesso palla vs Gol')
+    pp_gr = go.Figure()
+    for x, y, png in zip(df_std['Poss.'], df_std['Rendimento_Reti'], df_std['link_img']):
+        pp_gr.add_layout_image(x=x, y=y, source=png, xref="x", yref="y", sizex=5, sizey=5, xanchor="center", yanchor="middle")
+    pp_gr.add_trace(go.Scatter(x=df_std['Poss.'], y=df_std['Rendimento_Reti'],
+                               mode='markers', marker_opacity=0,
+                               customdata=df_std[['Squadra', 'Poss.', 'Rendimento_Reti']],
+                               hovertemplate=
+                               "%{customdata[0]}<br>" +
+                               "Possesso: %{customdata[1]}<br>" +
+                               "Gol: %{customdata[2]}<br>" ))
+    pp_gr.update_xaxes(dict(range=[min(df_std['Poss.']) - 4, max(df_std['Poss.']) + 4],title='Possesso palla'))
+    pp_gr.update_yaxes(dict(range=[min(df_std['Rendimento_Reti']) - 4, max(df_std['Rendimento_Reti']) + 4], title='Gol'))
+    st.plotly_chart(go.FigureWidget(data=pp_gr), use_container_width=True)
