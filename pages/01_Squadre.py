@@ -126,4 +126,6 @@ with att_sk:
                                "Gol: %{customdata[2]}<br>" ))
     pp_gr.update_xaxes(dict(range=[min(df_std['Poss.']) - 4, max(df_std['Poss.']) + 4],title='Possesso palla'))
     pp_gr.update_yaxes(dict(range=[min(df_std['Rendimento_Reti']) - 4, max(df_std['Rendimento_Reti']) + 4], title='Gol'))
+    pp_gr.update_layout(showlegend=False, annotations=[
+        dict(text=f"Correlazione:{df_std['Poss.'].corr(df_std['Rendimento_Reti'])}", x=0.05, y=0.95, xref='paper', yref='paper', font_size=13, showarrow=False, xanchor='left')])
     st.plotly_chart(go.FigureWidget(data=pp_gr), use_container_width=True)
