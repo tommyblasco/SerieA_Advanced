@@ -5,6 +5,12 @@ dict_camp = {'Premier League':'9','La Liga':'12','Serie A':'11','Bundesliga':'20
 stagione_corso='2024-2025'
 list_stag2pass=[str(int(stagione_corso[:4])-1)+'-'+stagione_corso[:4], str(int(stagione_corso[:4])-2)+'-'+str(int(stagione_corso[:4])-1)]
 
+ppda_det=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/SerieA_Advanced/refs/heads/master/ppda_det.csv",sep=',')
+ppda_riep=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/SerieA_Advanced/refs/heads/master/ppda_fin.csv",sep=',')
+shots=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/SerieA_Advanced/refs/heads/master/shot.csv",sep=',')
+
+conversione_nomi = {'Verona': 'Hellas Verona', 'Parma Calcio 1913': 'Parma', 'AC Milan': 'Milan'}
+ppda_det['Squadra']=ppda_det['Squadra'].replace(conversione_nomi)
 
 def update_colnames(col_list):
     n=len(col_list)
@@ -27,3 +33,27 @@ def get_stats_fbref(table,stag,league):
     rad_sito=f"https://raw.githubusercontent.com/tommyblasco/SerieA_Advanced/master/images/stemmi/{league}/"
     df['link_img']=[rad_sito+x+'.png' for x in df['Squadra']]
     return df
+
+def create_subdf(stag,league):
+    df_overall=get_stats_fbref(table=f'results{stag}{dict_camp[league]}1_overall', stag=stag, league=league)
+    df_std=get_stats_fbref(table='stats_squads_standard_for', stag=stag, league=league)
+    df_std_ag=get_stats_fbref(table='stats_squads_standard_against', stag=stag, league=league)
+    df_sh = get_stats_fbref(table='stats_squads_shooting_for', stag=stag, league=league)
+    df_sh_ag = get_stats_fbref(table='stats_squads_shooting_against', stag=stag, league=league)
+    df_pass = get_stats_fbref(table='stats_squads_passing_for', stag=stag, league=league)
+    df_pass_types = get_stats_fbref(table='stats_squads_passing_types_for', stag=stag, league=league)
+    df_misc = get_stats_fbref(table='stats_squads_misce_for', stag=stag, league=league)
+
+    df1 = df_overall[['Squadra','Pt','Rf','Rs','xG','xGA']].merge(df_std[['Squadra','Poss.']],on='Squadra',how='left')
+    df2 = df1.merge(df_sh[['Squadra', 'Standard_Tiri.1']], on='Squadra', how='left')
+    df3 = df2.merge(df_pass[['Squadra', 'xA','PF','PPA','Cross in area','PrgP']], on='Squadra', how='left')
+    df4 = df3.merge(df_pass_types[['Squadra', 'Tipologie di passaggi_PassFil']], on='Squadra', how='left')
+    df5 = df4.merge(df_misc[['Squadra', 'Rendimento_Falli','Rendimento_Cross','Rendimento_Int']], on='Squadra', how='left')
+    df5.columns=['Squadra','Punti','GolF','GolS','xG_for','xGA','TiP','xA','PF','PPA','Cross in area','PrgP','Filtranti','Falli','Cross','Intercetti']
+    df6 = df5.merge(df_std_ag[['Squadra', 'Prestazione prevista_xG']], on='Squadra', how='left')
+    df_fin = df6.merge(df_sh_ag[['Squadra', 'Standard_Tiri.1']], on='Squadra', how='left')
+    df_fin.columns=[df5.columns+['xG_conc','TiP_conc']]
+    if league=='Serie A':
+        ppda_det=ppda_det[ppda_det['Anno']==stag]
+        df_fin = df_fin.merge(ppda_det[['Squadra', 'Media PPDA']], on='Squadra', how='left')
+    return df_fin
