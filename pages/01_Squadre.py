@@ -30,23 +30,23 @@ with gen_cor:
     st.subheader('Verifica dal grafico')
     var_sel=st.selectbox('Seleziona la variabile',list(cor_df['Variabile']))
     cor_det_gr = go.Figure()
-    for x, y, png in zip(df['Punti'], df[var_sel], df['link_img']):
+    for x, y, png in zip(df[var_sel], df['Punti'], df['link_img']):
          cor_det_gr.add_layout_image( x=x, y=y, source=png,
                      xref="x", yref="y", sizex=5, sizey=5, xanchor="center", yanchor="middle")
-    x_min, x_max = df['Punti'].min() - 1, df['Punti'].max() + 1
-    y_min, y_max = df[var_sel].min() - 1, df[var_sel].max() + 1
+    x_min, x_max = df[var_sel].min() - 1, df[var_sel].max() + 1
+    y_min, y_max = df['Punti'].min() - 1, df['Punti'].max() + 1
     # #bisettrice
     # xg_gl.add_trace(go.Scatter(x=[x_min, x_max],y=[x_min, x_max],
     #             mode='lines', line=dict(color='red', dash='dash')))
     # #tooltip
-    cor_det_gr.add_trace(go.Scatter(x=df['Punti'], y=df[var_sel],
-             mode='markers', marker_opacity=0, customdata=df[['Squadra','Punti', var_sel]],
+    cor_det_gr.add_trace(go.Scatter(x=df[var_sel], y=df['Punti'],
+             mode='markers', marker_opacity=0, customdata=df[['Squadra',var_sel, 'Punti']],
              hovertemplate=
                  "%{customdata[0]}<br>" +
-                 "Punti: %{customdata[1]}<br>" +
-                 f"{var_sel}"+": %{customdata[2]}<br>" ))
-    cor_det_gr.update_xaxes(dict(range=[min(x_min,y_min), max(x_max,y_max)],title='Punti'))
-    cor_det_gr.update_yaxes(dict(range=[min(x_min,y_min), max(x_max,y_max)],title=f"{var_sel}"))
+                 "Punti: %{customdata[2]}<br>" +
+                 f"{var_sel}"+": %{customdata[1]}<br>" ))
+    cor_det_gr.update_xaxes(dict(range=[min(x_min,y_min), max(x_max,y_max)],title=f"{var_sel}"))
+    cor_det_gr.update_yaxes(dict(range=[min(x_min,y_min), max(x_max,y_max)],title='Punti'))
     # xg_gl.update_layout(showlegend=False, annotations=[dict(text="Underperform", x=0.05, y=0.95, xref='paper', yref='paper',font_size=13, showarrow=False, xanchor='left'),
     #                                          dict(text="Overperform",x=0.95, y=0.05, xref='paper', yref='paper', font_size=13,showarrow=False,xanchor='right')])
     st.plotly_chart(go.FigureWidget(data=cor_det_gr), use_container_width=True)
