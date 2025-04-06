@@ -45,8 +45,8 @@ with gen_cor:
                  "%{customdata[0]}<br>" +
                  "Punti: %{customdata[2]}<br>" +
                  f"{var_sel}"+": %{customdata[1]}<br>" ))
-    #cor_det_gr.update_xaxes(dict(range=[min(x_min,y_min), max(x_max,y_max)],title=f"{var_sel}"))
-    #cor_det_gr.update_yaxes(dict(range=[min(x_min,y_min), max(x_max,y_max)],title='Punti'))
+    cor_det_gr.update_xaxes(dict(title=f"{var_sel}"))
+    cor_det_gr.update_yaxes(dict(title='Punti'))
     # xg_gl.update_layout(showlegend=False, annotations=[dict(text="Underperform", x=0.05, y=0.95, xref='paper', yref='paper',font_size=13, showarrow=False, xanchor='left'),
     #                                          dict(text="Overperform",x=0.95, y=0.05, xref='paper', yref='paper', font_size=13,showarrow=False,xanchor='right')])
     st.plotly_chart(go.FigureWidget(data=cor_det_gr), use_container_width=True)
