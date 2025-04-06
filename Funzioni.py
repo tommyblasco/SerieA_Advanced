@@ -36,7 +36,7 @@ def get_stats_fbref(table,stag,league):
     df['link_img']=[rad_sito+x+'.png' for x in df['Squadra']]
     return df
 
-def create_subdf(stag,league):
+def create_subdf(stag,league,db_ppda=ppda_det):
     df_overall=get_stats_fbref(table=f'results{stag}{dict_camp[league]}1_overall', stag=stag, league=league)
     time.sleep(1)
     df_std=get_stats_fbref(table='stats_squads_standard_for', stag=stag, league=league)
@@ -64,6 +64,6 @@ def create_subdf(stag,league):
     df_fin = df6.merge(df_sh_ag[['Squadra', 'Standard_Tiri.1']], on='Squadra', how='left')
     df_fin.columns=list(df5.columns)+['xG_conc','TiP_conc']
     if league=='Serie A':
-        ppda_det=ppda_det[ppda_det['Anno']==stag]
+        ppda_det=db_ppda[db_ppda['Anno']==stag]
         df_fin = df_fin.merge(ppda_det[['Squadra', 'Media PPDA']], on='Squadra', how='left')
     return df_fin
