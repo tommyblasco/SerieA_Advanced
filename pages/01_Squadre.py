@@ -30,11 +30,11 @@ with gen_cor:
     st.subheader('Verifica dal grafico')
     var_sel=st.selectbox('Seleziona la variabile',list(cor_df['Variabile']))
     cor_det_gr = go.Figure()
-    for x, y, png in zip(df[var_sel], df['Punti'], df['link_img']):
-         cor_det_gr.add_layout_image( x=x, y=y, source=png,
-                     xref="x", yref="y", sizex=5, sizey=5, xanchor="center", yanchor="middle")
     x_min, x_max = df[var_sel].min() - 1, df[var_sel].max() + 1
     y_min, y_max = df['Punti'].min() - 1, df['Punti'].max() + 1
+    for x, y, png in zip(df[var_sel], df['Punti'], df['link_img']):
+         cor_det_gr.add_layout_image( x=x, y=y, source=png,
+                     xref="x", yref="y", sizex=(x_max-x_min)*0.05, sizey=(y_max-y_min)*0.05, xanchor="center", yanchor="middle")
     # #bisettrice
     # xg_gl.add_trace(go.Scatter(x=[x_min, x_max],y=[x_min, x_max],
     #             mode='lines', line=dict(color='red', dash='dash')))
