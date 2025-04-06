@@ -51,7 +51,7 @@ def create_subdf(stag,league):
     time.sleep(1)
     df_pass_types = get_stats_fbref(table='stats_squads_passing_types_for', stag=stag, league=league)
     time.sleep(1)
-    df_misc = get_stats_fbref(table='stats_squads_misce_for', stag=stag, league=league)
+    df_misc = get_stats_fbref(table='stats_squads_misc_for', stag=stag, league=league)
     time.sleep(1)
 
     df1 = df_overall[['Squadra','Pt','Rf','Rs','xG','xGA']].merge(df_std[['Squadra','Poss.']],on='Squadra',how='left')
