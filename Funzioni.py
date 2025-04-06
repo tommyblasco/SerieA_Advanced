@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import time
 
 dict_camp = {'Premier League':'9','La Liga':'12','Serie A':'11','Bundesliga':'20','Ligue 1':'13'}
 stagione_corso='2024-2025'
@@ -36,13 +37,21 @@ def get_stats_fbref(table,stag,league):
 
 def create_subdf(stag,league):
     df_overall=get_stats_fbref(table=f'results{stag}{dict_camp[league]}1_overall', stag=stag, league=league)
+    time.sleep(1)
     df_std=get_stats_fbref(table='stats_squads_standard_for', stag=stag, league=league)
+    time.sleep(1)
     df_std_ag=get_stats_fbref(table='stats_squads_standard_against', stag=stag, league=league)
+    time.sleep(1)
     df_sh = get_stats_fbref(table='stats_squads_shooting_for', stag=stag, league=league)
+    time.sleep(1)
     df_sh_ag = get_stats_fbref(table='stats_squads_shooting_against', stag=stag, league=league)
+    time.sleep(1)
     df_pass = get_stats_fbref(table='stats_squads_passing_for', stag=stag, league=league)
+    time.sleep(1)
     df_pass_types = get_stats_fbref(table='stats_squads_passing_types_for', stag=stag, league=league)
+    time.sleep(1)
     df_misc = get_stats_fbref(table='stats_squads_misce_for', stag=stag, league=league)
+    time.sleep(1)
 
     df1 = df_overall[['Squadra','Pt','Rf','Rs','xG','xGA']].merge(df_std[['Squadra','Poss.']],on='Squadra',how='left')
     df2 = df1.merge(df_sh[['Squadra', 'Standard_Tiri.1']], on='Squadra', how='left')
