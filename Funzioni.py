@@ -59,7 +59,7 @@ def create_subdf(stag,league):
     df3 = df2.merge(df_pass[['Squadra', 'Prestazione prevista_xA','PF','PPA','Cross in area','PrgP']], on='Squadra', how='left')
     df4 = df3.merge(df_pass_types[['Squadra', 'Tipologie di passaggi_PassFil']], on='Squadra', how='left')
     df5 = df4.merge(df_misc[['Squadra', 'Rendimento_Falli','Rendimento_Cross','Rendimento_Int']], on='Squadra', how='left')
-    df5.columns=['Squadra','Punti','GolF','GolS','xG_for','xGA','TiP','xA','PF','PPA','Cross in area','PrgP','Filtranti','Falli','Cross','Intercetti']
+    df5.columns=['Squadra','Punti','GolF','GolS','xG_for','xGA','Possesso','TiP','xA','PF','PPA','Cross in area','PrgP','Filtranti','Falli','Cross','Intercetti']
     df6 = df5.merge(df_std_ag[['Squadra', 'Prestazione prevista_xG']], on='Squadra', how='left')
     df_fin = df6.merge(df_sh_ag[['Squadra', 'Standard_Tiri.1']], on='Squadra', how='left')
     df_fin.columns=[df5.columns+['xG_conc','TiP_conc']]
