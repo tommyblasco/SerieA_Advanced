@@ -19,10 +19,17 @@ with gen_cor:
     st.subheader('Impatto sui punti conquistati')
     st.write('Glossario:')
     gl1, gl2 = st.columns(2)
-    gl1.write("""GolF: Gol Fatti, GolS: Gol Subiti, xG_for: Expected gol a favore, xGA: Expected gol concessi, 
+    gl1.write("""GolF: Gol Fatti 
+                GolS: Gol Subiti 
+                xG_for: Expected gol a favore
+                xGA: Expected gol concessi 
                 xA: Assist previsti""")
-    gl2.write("""Tiri in porta, TiP_conc: Tiri in porta concessi, Possesso: Possesso palla, PF: Passaggi chiave, 
-             PrgP: Passaggi progressivi, PPA: Passaggi in area """)
+    gl2.write("""Tiri in porta
+                TiP_conc: Tiri in porta concessi
+                Possesso: Possesso palla
+                PF: Passaggi chiave, 
+                PrgP: Passaggi progressivi
+             PPA: Passaggi in area """)
     y=df['Punti']
     correl=[y.corr(df[x]) for x in df.columns if x !='Squadra' and x!= 'Punti' and x!='link_img']
     cor_df=pd.DataFrame({'Variabile':[x for x in df.columns if x !='Squadra' and x!= 'Punti' and x!='link_img'],'Correlazione':correl})
