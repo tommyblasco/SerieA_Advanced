@@ -56,7 +56,7 @@ def create_subdf(stag,league):
 
     df1 = df_overall[['Squadra','Pt','Rf','Rs','xG','xGA']].merge(df_std[['Squadra','Poss.']],on='Squadra',how='left')
     df2 = df1.merge(df_sh[['Squadra', 'Standard_Tiri.1']], on='Squadra', how='left')
-    df3 = df2.merge(df_pass[['Squadra', 'xA','PF','PPA','Cross in area','PrgP']], on='Squadra', how='left')
+    df3 = df2.merge(df_pass[['Squadra', 'Prestazione prevista_xA','PF','PPA','Cross in area','PrgP']], on='Squadra', how='left')
     df4 = df3.merge(df_pass_types[['Squadra', 'Tipologie di passaggi_PassFil']], on='Squadra', how='left')
     df5 = df4.merge(df_misc[['Squadra', 'Rendimento_Falli','Rendimento_Cross','Rendimento_Int']], on='Squadra', how='left')
     df5.columns=['Squadra','Punti','GolF','GolS','xG_for','xGA','TiP','xA','PF','PPA','Cross in area','PrgP','Filtranti','Falli','Cross','Intercetti']
