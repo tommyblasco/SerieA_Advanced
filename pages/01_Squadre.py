@@ -15,8 +15,8 @@ gen_cor, sty_gam = st.tabs(['Correlazioni','Stili di gioco'])
 
 with gen_cor:
     y=df['Punti']
-    correl=[y.corr(df[x]) for x in df.columns if x !='Squadre' and x!= 'Punti']
-    cor_df=pd.DataFrame({'Variabile':[x for x in df.columns if x !='Squadre' and x!= 'Punti'],'Correlazione':correl})
+    correl=[y.corr(df[x]) for x in df.columns if x !='Squadra' and x!= 'Punti']
+    cor_df=pd.DataFrame({'Variabile':[x for x in df.columns if x !='Squadra' and x!= 'Punti'],'Correlazione':correl})
     cor_df=cor_df.sort_values('Correlazione',ascending=False)
     cor_gr = go.Figure()
     cor_gr.add_trace(go.Bar(y=cor_df['Variabile'], x=cor_df['Correlazione'], orientation='v'))
