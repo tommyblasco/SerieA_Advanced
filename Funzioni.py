@@ -42,10 +42,12 @@ def create_subdf(stag,league,db_ppda=ppda_det):
     df_std=get_stats_fbref(table='stats_squads_standard_for', stag=stag, league=league)
     time.sleep(1)
     df_std_ag=get_stats_fbref(table='stats_squads_standard_against', stag=stag, league=league)
+    df_std_ag['Squadra']=[x[3:] for x in df_std_ag['Squadra']]
     time.sleep(1)
     df_sh = get_stats_fbref(table='stats_squads_shooting_for', stag=stag, league=league)
     time.sleep(1)
     df_sh_ag = get_stats_fbref(table='stats_squads_shooting_against', stag=stag, league=league)
+    df_sh_ag['Squadra'] = [x[3:] for x in df_sh_ag['Squadra']]
     time.sleep(1)
     df_pass = get_stats_fbref(table='stats_squads_passing_for', stag=stag, league=league)
     time.sleep(1)
@@ -64,6 +66,6 @@ def create_subdf(stag,league,db_ppda=ppda_det):
     df_fin = df6.merge(df_sh_ag[['Squadra', 'Standard_Tiri.1']], on='Squadra', how='left')
     df_fin.columns=list(df5.columns)+['xG_conc','TiP_conc']
     if league=='Serie A':
-        ppda_det=db_ppda[db_ppda['Anno']==stag]
-        df_fin = df_fin.merge(ppda_det[['Squadra', 'Media PPDA']], on='Squadra', how='left')
+        ppda_dt=db_ppda[db_ppda['Anno']==stag[:5]+stag[7:9]]
+        df_fin = df_fin.merge(ppda_dt[['Squadra', 'Media PPDA']], on='Squadra', how='left')
     return df_fin
