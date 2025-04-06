@@ -1,3 +1,5 @@
+import stat
+
 import pandas as pd
 import plotly.graph_objects as go
 from Funzioni import *
@@ -14,6 +16,7 @@ df=create_subdf(stag_sel,camp_sel)
 gen_cor, sty_gam = st.tabs(['Correlazioni','Stili di gioco'])
 
 with gen_cor:
+    st.subheader('Impatto sui punti conquistati')
     y=df['Punti']
     correl=[y.corr(df[x]) for x in df.columns if x !='Squadra' and x!= 'Punti']
     cor_df=pd.DataFrame({'Variabile':[x for x in df.columns if x !='Squadra' and x!= 'Punti'],'Correlazione':correl})
@@ -22,6 +25,31 @@ with gen_cor:
     cor_gr.add_trace(go.Bar(y=cor_df['Correlazione'], x=cor_df['Variabile'], orientation='v'))
     st.plotly_chart(go.FigureWidget(data=cor_gr))
 
+    st.divider()
+
+    st.subheader('Verifica dal grafico')
+    var_sel=st.selectbox('Seleziona la variabile',list(cor_df['Variabile']))
+    cor_det_gr = go.Figure()
+    for x, y, png in zip(df['Punti'], df[var_sel], df['link_img']):
+         cor_det_gr.add_layout_image( x=x, y=y, source=png,
+                     xref="x", yref="y", sizex=5, sizey=5, xanchor="center", yanchor="middle")
+    x_min, x_max = df['Punti'].min() - 1, df['Punti'].max() + 1
+    y_min, y_max = df[var_sel].min() - 1, df[var_sel].max() + 1
+    # #bisettrice
+    # xg_gl.add_trace(go.Scatter(x=[x_min, x_max],y=[x_min, x_max],
+    #             mode='lines', line=dict(color='red', dash='dash')))
+    # #tooltip
+    cor_det_gr.add_trace(go.Scatter(x=df['Punti'], y=df[var_sel],
+             mode='markers', marker_opacity=0, customdata=df[['Squadra','Punti', var_sel]],
+             hovertemplate=
+                 "%{customdata[0]}<br>" +
+                 "Punti: %{customdata[1]}<br>" +
+                 f"{var_sel}"+": %{customdata[2]}<br>" ))
+    cor_det_gr.update_xaxes(dict(range=[min(x_min,y_min), max(x_max,y_max)],title='Punti'))
+    cor_det_gr.update_yaxes(dict(range=[min(x_min,y_min), max(x_max,y_max)],title=f"{var_sel}"))
+    # xg_gl.update_layout(showlegend=False, annotations=[dict(text="Underperform", x=0.05, y=0.95, xref='paper', yref='paper',font_size=13, showarrow=False, xanchor='left'),
+    #                                          dict(text="Overperform",x=0.95, y=0.05, xref='paper', yref='paper', font_size=13,showarrow=False,xanchor='right')])
+    st.plotly_chart(go.FigureWidget(data=cor_det_gr), use_container_width=True)
 
     # df_std['G-xG']=[x-y for x,y in zip(df_std['Rendimento_Reti'],df_std['Prestazione prevista_xG'])]
     # df_std['npG-npxG'] = [x - y for x, y in zip(df_std['Rendimento_R - Rig'], df_std['Prestazione prevista_npxG'])]

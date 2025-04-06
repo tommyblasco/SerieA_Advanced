@@ -41,9 +41,6 @@ def create_subdf(stag,league,db_ppda=ppda_det):
     time.sleep(1)
     df_std=get_stats_fbref(table='stats_squads_standard_for', stag=stag, league=league)
     time.sleep(1)
-    df_std_ag=get_stats_fbref(table='stats_squads_standard_against', stag=stag, league=league)
-    df_std_ag['Squadra']=[x[3:] for x in df_std_ag['Squadra']]
-    time.sleep(1)
     df_sh = get_stats_fbref(table='stats_squads_shooting_for', stag=stag, league=league)
     time.sleep(1)
     df_sh_ag = get_stats_fbref(table='stats_squads_shooting_against', stag=stag, league=league)
@@ -56,15 +53,14 @@ def create_subdf(stag,league,db_ppda=ppda_det):
     df_misc = get_stats_fbref(table='stats_squads_misc_for', stag=stag, league=league)
     time.sleep(1)
 
-    df1 = df_overall[['Squadra','Pt','Rf','Rs','xG','xGA']].merge(df_std[['Squadra','Poss.']],on='Squadra',how='left')
+    df1 = df_overall[['Squadra','link_img','Pt','Rf','Rs','xG','xGA']].merge(df_std[['Squadra','Poss.']],on='Squadra',how='left')
     df2 = df1.merge(df_sh[['Squadra', 'Standard_Tiri.1']], on='Squadra', how='left')
     df3 = df2.merge(df_pass[['Squadra', 'Prestazione prevista_xA','PF','PPA','Cross in area','PrgP']], on='Squadra', how='left')
     df4 = df3.merge(df_pass_types[['Squadra', 'Tipologie di passaggi_PassFil']], on='Squadra', how='left')
     df5 = df4.merge(df_misc[['Squadra', 'Rendimento_Falli','Rendimento_Cross','Rendimento_Int']], on='Squadra', how='left')
-    df5.columns=['Squadra','Punti','GolF','GolS','xG_for','xGA','Possesso','TiP','xA','PF','PPA','Cross in area','PrgP','Filtranti','Falli','Cross','Intercetti']
-    df6 = df5.merge(df_std_ag[['Squadra', 'Prestazione prevista_xG']], on='Squadra', how='left')
-    df_fin = df6.merge(df_sh_ag[['Squadra', 'Standard_Tiri.1']], on='Squadra', how='left')
-    df_fin.columns=list(df5.columns)+['xG_conc','TiP_conc']
+    df5.columns=['Squadra','link_img','Punti','GolF','GolS','xG_for','xGA','Possesso','TiP','xA','PF','PPA','Cross in area','PrgP','Filtranti','Falli','Cross','Intercetti']
+    df_fin = df5.merge(df_sh_ag[['Squadra', 'Standard_Tiri.1']], on='Squadra', how='left')
+    df_fin.columns=list(df5.columns)+['TiP_conc']
     if league=='Serie A':
         ppda_dt=db_ppda[db_ppda['Anno']==stag[:5]+stag[7:9]]
         df_fin = df_fin.merge(ppda_dt[['Squadra', 'Media PPDA']], on='Squadra', how='left')
