@@ -23,6 +23,7 @@ def update_colnames(col_list):
             new_col.append(col_list[i][0]+"_"+col_list[i][1])
     return new_col
 
+@st.cache_data
 def get_stats_fbref(table,stag,league):
     if stag!=stagione_corso:
         s = f'https://fbref.com/it/comp/{dict_camp[league]}/{stag}/Statistiche-di-{league.replace(' ', '-')}-{stag}'
