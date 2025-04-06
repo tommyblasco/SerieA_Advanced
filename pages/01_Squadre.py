@@ -34,7 +34,7 @@ with gen_cor:
     y_min, y_max = df['Punti'].min() - 1, df['Punti'].max() + 1
     for x, y, png in zip(df[var_sel], df['Punti'], df['link_img']):
          cor_det_gr.add_layout_image( x=x, y=y, source=png,
-                     xref="x", yref="y", sizex=(x_max-x_min)*0.15, sizey=(y_max-y_min)*0.15, xanchor="center", yanchor="middle")
+                     xref="x", yref="y", sizex=(x_max-x_min)*0.1, sizey=(y_max-y_min)*0.1, xanchor="center", yanchor="middle")
     # #bisettrice
     # xg_gl.add_trace(go.Scatter(x=[x_min, x_max],y=[x_min, x_max],
     #             mode='lines', line=dict(color='red', dash='dash')))
