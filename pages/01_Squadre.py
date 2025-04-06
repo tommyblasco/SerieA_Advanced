@@ -19,7 +19,7 @@ with gen_cor:
     cor_df=pd.DataFrame({'Variabile':[x for x in df.columns if x !='Squadra' and x!= 'Punti'],'Correlazione':correl})
     cor_df=cor_df.sort_values('Correlazione',ascending=False)
     cor_gr = go.Figure()
-    cor_gr.add_trace(go.Bar(y=cor_df['Variabile'], x=cor_df['Correlazione'], orientation='v'))
+    cor_gr.add_trace(go.Bar(y=cor_df['Correlazione'], x=cor_df['Variabile'], orientation='v'))
     st.plotly_chart(go.FigureWidget(data=cor_gr))
 
 
