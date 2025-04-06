@@ -62,7 +62,7 @@ def create_subdf(stag,league):
     df5.columns=['Squadra','Punti','GolF','GolS','xG_for','xGA','Possesso','TiP','xA','PF','PPA','Cross in area','PrgP','Filtranti','Falli','Cross','Intercetti']
     df6 = df5.merge(df_std_ag[['Squadra', 'Prestazione prevista_xG']], on='Squadra', how='left')
     df_fin = df6.merge(df_sh_ag[['Squadra', 'Standard_Tiri.1']], on='Squadra', how='left')
-    df_fin.columns=[df5.columns+['xG_conc','TiP_conc']]
+    df_fin.columns=df5.columns+['xG_conc','TiP_conc']
     if league=='Serie A':
         ppda_det=ppda_det[ppda_det['Anno']==stag]
         df_fin = df_fin.merge(ppda_det[['Squadra', 'Media PPDA']], on='Squadra', how='left')
